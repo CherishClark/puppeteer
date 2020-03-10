@@ -27,33 +27,24 @@ await page.evaluate(() => {
    document.querySelector('input[value="-1"').click();
    // Select Biking Issues 1005971
    document.querySelector('input[value="1005971"').click();
-   // document.querySelector('input[value="0"').click();
-    // document.querySelector('button#save-filters-button').click();
+   document.querySelector('a.link.sheet-close').click();
 })
-
-// await page.$('input[value="0"]');
-await page.$('a.link.sheet-close ');
-await page.select('#dateFilter');
-await page.evaluate(() => {
-   // document.querySelector('input[value="0"').click();
-    // document.querySelector('button#save-filters-button').click();
-})
+await page.waitForSelector('input[type="checkbox"]')
+await page.$$eval("input[type='checkbox']", checks => checks.forEach(c => c.checked = false));
 
 await page.evaluate(() => {
-    document.querySelector('a.link.sheet-close').click();
-    document.querySelector('#dateFilter').click();
-     document.querySelector('input[value="0"').click();
-    document.querySelector('button#save-filters-button').click();
+  let statuses = document.querySelector('#viewFiltersModal > div.view.view-init.popover-view > div.list.no-hairlines.no-hairlines-between.modal-body.input-container > ul > li:nth-child(2) > div > div.item-input-wrap > a > div > div > div.item-after');
+  statuses.innerHTML = "Submitted, Received, In Process"
+
 })
 
+await page.select('#dateFilter', '0')
 
-  await page.screenshot({path: 'doesthisowrk.png'})
+await page.evaluate(() => {
+  document.querySelector('button#save-filters-button').click();
+})
 
-
-// await page.select('#requestTypeFilter', 'Biking Issues')
-
-
-        // const sw = await page.select('save-filters-button', 'sidewalks')
+await page.screenshot({path: 'doesthisowrk.png'})
 
   } catch (e) {
       console.log(e);
